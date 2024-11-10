@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ./
+    image: secretaria
+    container_name: secretaria-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www/
+    networks:
+      - secretaria-network
+
+  db:
+    image: mysql:8.3.0
+    container_name: secretaria-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: secretaria-db
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: username
+      MYSQL_PASSWORD: password
+    ports:
+      - 3306:3306
+    volumes:
+      - ./data:/var/lib/mysql
+    networks:
+      - secretaria-network
+
+  nginx:
+    image: nginx:stable-alpine3.17
+    container_name: secretaria-nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - secretaria-network
+
+networks:
+  secretaria-network:
+    driver: bridge
