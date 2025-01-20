@@ -5,29 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Group extends Model
+class Student extends Model
 {
     use HasFactory;
 
-    protected $table = "groups";
+    protected $table = "students";
 
     protected $fillable = [
-        "start",
-        "end",
-        "price",
-        "discount",
-        "course_id",
-        "canEnroll",
+        "name",
+        "email",
+        "birthdate",
+        "phone",
+        "identity",
+        "cpf",
+        "cep",
+        "address",
+        "education",
+        "graduate",
+        "workspace",
+        "deficit",
     ];
 
-    public function course()
+    public function groups()
     {
-        return $this->belongsTo(Course::class);
-    }
-
-    function groups()
-    {
-        return $this->belongsToMany(Student::class)
+        return $this->belongsToMany(Group::class)
             ->withPivot(
                 "modality",
                 "payment",

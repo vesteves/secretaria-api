@@ -4,8 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Group\StoreGroup;
 use App\Http\Requests\Group\UpdateGroup;
+use App\Models\Course;
 use App\Models\Group;
+use App\Models\Student;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\StudentApproved;
 
 class GroupController extends Controller
 {
@@ -47,6 +52,21 @@ class GroupController extends Controller
     }
 
     /**
+     * Get next groups by course_id.
+     */
+    public function getNextGroupsByCourseId(Course $course)
+    {
+        $groups = Group::where(function ($query) {
+            $query->where('start', '>', Carbon::now())
+                ->orWhere('start', '>=', Carbon::now()->subDays(15));
+        })
+            ->where('course_id', $course->id)
+            ->where('can_enroll', true)
+            ->get();
+        return response()->json($groups);
+    }
+
+    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateGroup $request, Group $group)
@@ -58,6 +78,26 @@ class GroupController extends Controller
         return response()->json([
             "msg" => "Turma atualizada!",
             "data" => $group
+        ]);
+    }
+
+    /**
+     * Approve or decline a student in a group
+     */
+    public function approveOrDecline(Group $group, Request $request)
+    {
+        $group->students()->sync($request->student_id, [
+            "is_approved" => $request->approve,
+        ]);
+
+        $student = Student::find($request->student_id);
+
+        if ($request->approve) {
+            Mail::to($student)->send(new StudentApproved($student, $group));
+        }
+
+        return response()->json([
+            "msg" => $request->approve ? "Aprovado" : "Reprovado"
         ]);
     }
 
