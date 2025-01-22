@@ -44,6 +44,7 @@ Route::prefix('/group')
         Route::get('/next-groups/{course}', 'getNextGroupsByCourseId');
         Route::put('/{group}', 'update');
         Route::delete('/{group}', 'destroy');
+        Route::post('/subscribe/{group}', 'subscribe');
     });
 
 Route::prefix('/student')

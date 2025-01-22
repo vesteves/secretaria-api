@@ -10,7 +10,7 @@ use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\StudentApproved;
+use App\Mail\StudentSubscribed;
 
 class GroupController extends Controller
 {
@@ -84,20 +84,21 @@ class GroupController extends Controller
     /**
      * Approve or decline a student in a group
      */
-    public function approveOrDecline(Group $group, Request $request)
+    public function subscribe(Group $group, Request $request)
     {
         $group->students()->sync($request->student_id, [
-            "is_approved" => $request->approve,
+            "is_approved" => $request->is_approved,
         ]);
 
         $student = Student::find($request->student_id);
+        $course = $group->course;
 
-        if ($request->approve) {
-            Mail::to($student)->send(new StudentApproved($student, $group));
+        if ($request->is_approved) {
+            Mail::to($student)->send(new StudentSubscribed($student, $group, $course));
         }
 
         return response()->json([
-            "msg" => $request->approve ? "Aprovado" : "Reprovado"
+            "msg" => $request->is_approved ? "Aprovado" : "Reprovado"
         ]);
     }
 

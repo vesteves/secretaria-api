@@ -25,7 +25,7 @@ class Group extends Model
         return $this->belongsTo(Course::class);
     }
 
-    function groups()
+    function students()
     {
         return $this->belongsToMany(Student::class)
             ->withPivot(

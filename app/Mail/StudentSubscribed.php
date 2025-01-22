@@ -10,8 +10,9 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Student;
 use App\Models\Group;
+use App\Models\Course;
 
-class StudentApproved extends Mailable
+class StudentSubscribed extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -21,6 +22,7 @@ class StudentApproved extends Mailable
     public function __construct(
         public Student $student,
         public Group $group,
+        public Course $course,
     ) {}
 
     /**
@@ -29,7 +31,7 @@ class StudentApproved extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Estudante aprovado!',
+            subject: 'Estudante inscrito!',
         );
     }
 
@@ -39,7 +41,7 @@ class StudentApproved extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.student.approved',
+            view: 'emails.student.subscribed',
         );
     }
 
