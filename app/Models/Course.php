@@ -14,11 +14,17 @@ class Course extends Model
     protected $fillable = [
         "name",
         "summary",
-        "description"
+        "description",
+        "area_id"
     ];
 
     public function groups()
     {
         return $this->hasMany(Group::class);
+    }
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class);
     }
 }

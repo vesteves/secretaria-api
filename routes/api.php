@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AreaController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\UserController;
@@ -33,6 +34,16 @@ Route::prefix('/course')
         Route::get('/{course}', 'show');
         Route::put('/{course}', 'update');
         Route::delete('/{course}', 'destroy');
+    });
+
+Route::prefix('/area')
+    ->controller(AreaController::class)
+    ->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::get('/{area}', 'show');
+        Route::put('/{area}', 'update');
+        Route::delete('/{area}', 'destroy');
     });
 
 Route::prefix('/group')
