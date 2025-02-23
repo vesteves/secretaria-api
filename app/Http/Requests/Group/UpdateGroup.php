@@ -22,10 +22,9 @@ class UpdateGroup extends FormRequest
     public function rules(): array
     {
         return [
-            "start" => "date|after:yesterday",
-            "end" => "date|after:yesterday",
+            "start" => "date",
+            "end" => "date",
             "price" => "integer",
-            "discount" => "integer",
             "course_id" => "integer",
         ];
     }

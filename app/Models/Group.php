@@ -15,9 +15,15 @@ class Group extends Model
         "start",
         "end",
         "price",
-        "discount",
         "course_id",
-        "canEnroll",
+        "classroom_id",
+        "teacher",
+        "inCompany",
+        "frequency",
+    ];
+
+    protected $casts = [
+        "frequency" => "array",
     ];
 
     public function course()
@@ -33,6 +39,9 @@ class Group extends Model
                 "payment",
                 "discover",
                 "google",
+                "price",
+                "links",
+                "status",
             )
             ->withTimestamps();
     }

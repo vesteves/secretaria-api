@@ -25,6 +25,9 @@ class UpdateCourse extends FormRequest
             "name" => "string",
             "summary" => "string",
             "description" => "string",
+            "position" => "integer",
+            "workload" => "integer",
+            "inCompany" => "boolean",
         ];
     }
 }

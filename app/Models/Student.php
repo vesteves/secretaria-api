@@ -34,6 +34,9 @@ class Student extends Model
                 "payment",
                 "discover",
                 "google",
+                "price",
+                "links",
+                "status",
             )
             ->withTimestamps();
     }

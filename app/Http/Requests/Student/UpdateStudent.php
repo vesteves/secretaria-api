@@ -40,6 +40,7 @@ class UpdateStudent extends FormRequest
             "discover" => "string",
             "google" => "boolean",
             "deficit" => "string|nullable",
+            "status" => "string",
         ];
     }
 }

@@ -25,7 +25,6 @@ class StoreGroup extends FormRequest
             "start" => "required|date|after:yesterday",
             "end" => "required|date|after:yesterday",
             "price" => "required|integer",
-            "discount" => "nullable|integer",
             "course_id" => "required|integer",
         ];
     }

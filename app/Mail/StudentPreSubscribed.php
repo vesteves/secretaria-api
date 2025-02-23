@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Student;
 
-class StudentCreated extends Mailable
+class StudentPreSubscribed extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -37,7 +37,7 @@ class StudentCreated extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.student.created',
+            view: 'emails.student.presubscribed',
         );
     }
 

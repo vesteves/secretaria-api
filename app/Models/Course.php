@@ -15,7 +15,10 @@ class Course extends Model
         "name",
         "summary",
         "description",
-        "area_id"
+        "area_id",
+        "position",
+        "workload",
+        "inCompany",
     ];
 
     public function groups()

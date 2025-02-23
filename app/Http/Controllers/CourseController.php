@@ -42,7 +42,7 @@ class CourseController extends Controller
      */
     public function update(UpdateCourse $request, Course $course)
     {
-        $course->update($request->all());
+        $course->update($request->validated());
 
         // TODO colocar em um log de alterações quais campos e quem alterou
 

@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\StudentSubscribed;
+use App\Mail\StudentPaymentSent;
 
 class GroupController extends Controller
 {
@@ -82,23 +83,50 @@ class GroupController extends Controller
     }
 
     /**
-     * Approve or decline a student in a group
+     * Change a student status on a group
      */
-    public function subscribe(Group $group, Request $request)
+    public function changeStudentStatus(Group $group, Request $request)
     {
-        $group->students()->sync($request->student_id, [
-            "is_approved" => $request->is_approved,
+        $group->students()->syncWithPivotValues($request->student_id, [
+            "status" => $request->status,
+            "price" => $request->price,
+            "links" => $request->links,
         ]);
 
         $student = Student::find($request->student_id);
         $course = $group->course;
 
-        if ($request->is_approved) {
-            Mail::to($student)->send(new StudentSubscribed($student, $group, $course));
+        $statusMessage = "Pré Cadastrado";
+
+        switch ($request->status) {
+            case "presubscribed":
+                $statusMessage = "Pré Inscrito";
+                break;
+            case "paymentsent":
+                Mail::to($student)->send(new StudentPaymentSent($student, $course, $request->links));
+                $statusMessage = "Pagamento Enviado";
+                break;
+            case "unsubscribed":
+                $statusMessage = "Inscrição Cancelada";
+                break;
+            case "subscribed":
+                Mail::to($student)->send(new StudentSubscribed($student, $group, $course));
+                $statusMessage = "Inscrito";
+                break;
+            case "approved":
+                $statusMessage = "Aprovado";
+                break;
+            case "reproved":
+                $statusMessage = "Reprovado";
+                break;
+
+            default:
+                $statusMessage = "Pré Cadastrado";
+                break;
         }
 
         return response()->json([
-            "msg" => $request->is_approved ? "Aprovado" : "Reprovado"
+            "msg" => $statusMessage,
         ]);
     }
 
