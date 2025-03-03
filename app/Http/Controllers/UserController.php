@@ -45,7 +45,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function test()
+    public function me()
     {
         return response()->json(Auth::user());
     }

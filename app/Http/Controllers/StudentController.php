@@ -35,7 +35,10 @@ class StudentController extends Controller
      */
     public function store(StoreStudent $request)
     {
-        $student = Student::create($request->validated());
+
+        $student = $request->email ?
+            Student::create($request->validated()) :
+            Student::where("cpf", $request->cpf)->first();
 
         $student->groups()->attach($request->group_id, [
             "course_id" => $request->course_id,
@@ -43,8 +46,6 @@ class StudentController extends Controller
             "payment" => $request->payment,
             "discover" => $request->discover,
             "google" => $request->google,
-            "price" => $request->price,
-            "links" => $request->links,
             "status" => "presubscribed",
         ]);
 
@@ -61,6 +62,15 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
+        return response()->json($student);
+    }
+
+    /**
+     * Get student by CPF.
+     */
+    public function verifyByCpf(Request $request)
+    {
+        $student = Student::where('cpf', $request->cpf)->first();
         return response()->json($student);
     }
 

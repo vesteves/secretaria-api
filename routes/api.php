@@ -24,57 +24,58 @@ Route::prefix('/auth')
     ->group(function () {
         Route::post('/login', 'login');
         Route::post('/register', 'register');
-        Route::get('/test', 'test')->middleware('auth:sanctum');
+        Route::get('/me', 'me')->middleware('auth:sanctum');
     });
 
 Route::prefix('/course')
     ->controller(CourseController::class)
     ->group(function () {
         Route::get('/', 'index');
-        Route::post('/', 'store');
+        Route::post('/', 'store')->middleware('auth:sanctum');
         Route::get('/{course}', 'show');
-        Route::put('/{course}', 'update');
-        Route::delete('/{course}', 'destroy');
+        Route::put('/{course}', 'update')->middleware('auth:sanctum');
+        Route::delete('/{course}', 'destroy')->middleware('auth:sanctum');
     });
 
 Route::prefix('/area')
     ->controller(AreaController::class)
     ->group(function () {
         Route::get('/', 'index');
-        Route::post('/', 'store');
+        Route::post('/', 'store')->middleware('auth:sanctum');
         Route::get('/{area}', 'show');
-        Route::put('/{area}', 'update');
-        Route::delete('/{area}', 'destroy');
+        Route::put('/{area}', 'update')->middleware('auth:sanctum');
+        Route::delete('/{area}', 'destroy')->middleware('auth:sanctum');
     });
 
 Route::prefix('/classroom')
     ->controller(ClassroomController::class)
     ->group(function () {
         Route::get('/', 'index');
-        Route::post('/', 'store');
+        Route::post('/', 'store')->middleware('auth:sanctum');
         Route::get('/{classroom}', 'show');
-        Route::put('/{classroom}', 'update');
-        Route::delete('/{classroom}', 'destroy');
+        Route::put('/{classroom}', 'update')->middleware('auth:sanctum');
+        Route::delete('/{classroom}', 'destroy')->middleware('auth:sanctum');
     });
 
 Route::prefix('/group')
     ->controller(GroupController::class)
     ->group(function () {
         Route::get('/', 'index');
-        Route::post('/', 'store');
+        Route::post('/', 'store')->middleware('auth:sanctum');
         Route::get('/{group}', 'show');
         Route::get('/next-groups/{course}', 'getNextGroupsByCourseId');
-        Route::put('/{group}', 'update');
-        Route::delete('/{group}', 'destroy');
-        Route::patch('/{group}/status', 'changeStudentStatus');
+        Route::put('/{group}', 'update')->middleware('auth:sanctum');
+        Route::delete('/{group}', 'destroy')->middleware('auth:sanctum');
+        Route::patch('/{group}/status', 'changeStudentStatus')->middleware('auth:sanctum');
     });
 
 Route::prefix('/student')
     ->controller(StudentController::class)
     ->group(function () {
         Route::get('/', 'index');
-        Route::post('/', 'store');
+        Route::post('/', 'store')->middleware('auth:sanctum');
         Route::get('/{student}', 'show');
-        Route::put('/{student}', 'update');
-        Route::delete('/{student}', 'destroy');
+        Route::get('/{cpf}/verify', 'verifyByCpf');
+        Route::put('/{student}', 'update')->middleware('auth:sanctum');
+        Route::delete('/{student}', 'destroy')->middleware('auth:sanctum');
     });
