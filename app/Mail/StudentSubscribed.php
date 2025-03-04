@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Models\Student;
 use App\Models\Group;
 use App\Models\Course;
+use App\Models\Contract;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class StudentSubscribed extends Mailable
@@ -24,6 +25,7 @@ class StudentSubscribed extends Mailable
         public Student $student,
         public Group $group,
         public Course $course,
+        public Contract $contract,
     ) {}
 
     /**
@@ -64,7 +66,7 @@ class StudentSubscribed extends Mailable
                 function () use ($pdf) {
                     return $pdf->output();
                 },
-                'contratooo.pdf',
+                'contrato_' . $this->contract->id . '.pdf',
                 ['mime' => 'application/pdf']
             ),
         ];

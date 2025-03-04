@@ -123,7 +123,7 @@ class GroupController extends Controller
                     'group'   => $studentGroup,
                 ])->render();
 
-                Contract::create([
+                $contract = Contract::create([
                     "student_id" => $student->id,
                     "group_id" => $group->id,
                     "course_id" => $course->id,
@@ -132,7 +132,7 @@ class GroupController extends Controller
                 ]);
 
 
-                Mail::to($student)->send(new StudentSubscribed($student, $studentGroup, $course));
+                Mail::to($student)->send(new StudentSubscribed($student, $studentGroup, $course, $contract));
                 $statusMessage = "Inscrito";
                 break;
             case "approved":
