@@ -79,3 +79,13 @@ Route::prefix('/student')
         Route::put('/{student}', 'update')->middleware('auth:sanctum');
         Route::delete('/{student}', 'destroy')->middleware('auth:sanctum');
     });
+
+Route::prefix('/user')
+    ->controller(UserController::class)
+    ->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'store')->middleware('auth:sanctum');
+        Route::get('/{user}', 'show');
+        Route::put('/{user}', 'update')->middleware('auth:sanctum');
+        Route::delete('/{user}', 'destroy')->middleware('auth:sanctum');
+    });
