@@ -26,6 +26,10 @@ class StoreGroup extends FormRequest
             "end" => "required|date|after:yesterday",
             "price" => "required|integer",
             "course_id" => "required|integer",
+            "teacher" => "string",
+            "inCompany" => "boolean",
+            "frequency" => "array",
+            "modalities" => "array",
         ];
     }
 }

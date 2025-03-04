@@ -25,7 +25,6 @@ class StoreStudent extends FormRequest
             "cpf" => "required|string",
             "course_id" => "required|integer",
             "group_id" => "required|integer",
-            "modality" => "required|string",
             "payment" => "required|string",
             "name" => "string",
             "email" => "string",

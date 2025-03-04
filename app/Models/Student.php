@@ -30,13 +30,13 @@ class Student extends Model
     {
         return $this->belongsToMany(Group::class)
             ->withPivot(
-                "modality",
                 "payment",
                 "discover",
                 "google",
                 "price",
                 "links",
                 "status",
+                "motivation",
             )
             ->withTimestamps();
     }

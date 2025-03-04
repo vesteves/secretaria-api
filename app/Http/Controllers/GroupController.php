@@ -91,6 +91,7 @@ class GroupController extends Controller
             "status" => $request->status,
             "price" => $request->price,
             "links" => $request->links,
+            "motivation" => $request->motivation,
         ]);
 
         $student = Student::find($request->student_id);
@@ -118,6 +119,10 @@ class GroupController extends Controller
                 break;
             case "reproved":
                 $statusMessage = "Reprovado";
+                break;
+
+            case "canceled":
+                $statusMessage = "Cancelado";
                 break;
 
             default:

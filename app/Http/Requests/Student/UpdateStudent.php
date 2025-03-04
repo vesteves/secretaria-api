@@ -35,7 +35,6 @@ class UpdateStudent extends FormRequest
             "workspace" => "string",
             "course_id" => "integer",
             "group_id" => "integer",
-            "modality" => "string",
             "payment" => "string",
             "discover" => "string",
             "google" => "boolean",

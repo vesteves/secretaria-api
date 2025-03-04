@@ -26,6 +26,10 @@ class UpdateGroup extends FormRequest
             "end" => "date",
             "price" => "integer",
             "course_id" => "integer",
+            "teacher" => "string",
+            "inCompany" => "boolean",
+            "frequency" => "array",
+            "modalities" => "array",
         ];
     }
 }

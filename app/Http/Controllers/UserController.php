@@ -34,6 +34,8 @@ class UserController extends Controller
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
+            'name' => ['required'],
+            'profile' => ['required'],
         ]);
 
         $user = User::create($credentials);

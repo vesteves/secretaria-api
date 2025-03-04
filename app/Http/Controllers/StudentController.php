@@ -42,7 +42,6 @@ class StudentController extends Controller
 
         $student->groups()->attach($request->group_id, [
             "course_id" => $request->course_id,
-            "modality" => $request->modality,
             "payment" => $request->payment,
             "discover" => $request->discover,
             "google" => $request->google,

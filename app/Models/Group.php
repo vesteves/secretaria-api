@@ -20,10 +20,12 @@ class Group extends Model
         "teacher",
         "inCompany",
         "frequency",
+        "modalities",
     ];
 
     protected $casts = [
         "frequency" => "array",
+        "modalities" => "array",
     ];
 
     public function course()
@@ -42,6 +44,7 @@ class Group extends Model
                 "price",
                 "links",
                 "status",
+                "motivation",
             )
             ->withTimestamps();
     }
