@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\ContractController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\UserController;
@@ -45,6 +46,13 @@ Route::prefix('/area')
         Route::get('/{area}', 'show');
         Route::put('/{area}', 'update')->middleware('auth:sanctum');
         Route::delete('/{area}', 'destroy')->middleware('auth:sanctum');
+    });
+
+Route::prefix('/contract')
+    ->controller(ContractController::class)
+    ->group(function () {
+        Route::get('/', 'index')->middleware('auth:sanctum');
+        Route::get('/{contract}', 'show')->middleware('auth:sanctum');
     });
 
 Route::prefix('/classroom')
