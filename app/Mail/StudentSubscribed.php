@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Models\Student;
 use App\Models\Group;
 use App\Models\Course;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class StudentSubscribed extends Mailable
 {
@@ -52,6 +53,20 @@ class StudentSubscribed extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        $pdf = PDF::loadView('contract', [
+            "student" => $this->student,
+            "group" => $this->group,
+            "course" => $this->course,
+        ]);
+
+        return [
+            \Illuminate\Mail\Mailables\Attachment::fromData(
+                function () use ($pdf) {
+                    return $pdf->output();
+                },
+                'contratooo.pdf',
+                ['mime' => 'application/pdf']
+            ),
+        ];
     }
 }

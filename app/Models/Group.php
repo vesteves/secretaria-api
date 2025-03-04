@@ -37,6 +37,7 @@ class Group extends Model
     {
         return $this->belongsToMany(Student::class)
             ->withPivot(
+                "id",
                 "modality",
                 "payment",
                 "discover",
@@ -45,7 +46,15 @@ class Group extends Model
                 "links",
                 "status",
                 "motivation",
+                "payment_details",
+                "sponsor",
+                "witness",
             )
             ->withTimestamps();
+    }
+
+    public function contracts()
+    {
+        return $this->hasMany(Contract::class);
     }
 }

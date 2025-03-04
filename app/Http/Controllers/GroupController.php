@@ -7,6 +7,7 @@ use App\Http\Requests\Group\UpdateGroup;
 use App\Models\Course;
 use App\Models\Group;
 use App\Models\Student;
+use App\Models\Contract;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -92,9 +93,14 @@ class GroupController extends Controller
             "price" => $request->price,
             "links" => $request->links,
             "motivation" => $request->motivation,
+            "payment_details" => $request->payment_details,
+            "sponsor" => $request->sponsor,
+            "witness" => $request->witness,
         ]);
 
         $student = Student::find($request->student_id);
+        $studentGroup = $student->groups()->where('group_id', $group->id)->first();
+
         $course = $group->course;
 
         $statusMessage = "Pré Cadastrado";
@@ -104,14 +110,29 @@ class GroupController extends Controller
                 $statusMessage = "Pré Inscrito";
                 break;
             case "paymentsent":
-                Mail::to($student)->send(new StudentPaymentSent($student, $course, $request->links));
+                Mail::to($student)->send(new StudentPaymentSent($student, $studentGroup, $request->links));
                 $statusMessage = "Pagamento Enviado";
                 break;
             case "unsubscribed":
                 $statusMessage = "Inscrição Cancelada";
                 break;
             case "subscribed":
-                Mail::to($student)->send(new StudentSubscribed($student, $group, $course));
+                $htmlContent = view('contract', [
+                    'student' => $student,
+                    'course'  => $course,
+                    'group'   => $studentGroup,
+                ])->render();
+
+                Contract::create([
+                    "student_id" => $student->id,
+                    "group_id" => $group->id,
+                    "course_id" => $course->id,
+                    "group_student_id" => $studentGroup->pivot->id,
+                    "content" => $htmlContent,
+                ]);
+
+
+                Mail::to($student)->send(new StudentSubscribed($student, $studentGroup, $course));
                 $statusMessage = "Inscrito";
                 break;
             case "approved":

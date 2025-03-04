@@ -6,13 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    // payment_details_sponsor_witness
     /**
      * Run the migrations.
      */
     public function up(): void
     {
         Schema::table('group_student', function (Blueprint $table) {
-            $table->string("motivation")->nullable();
+            $table->string("payment_details")->nullable();
+            $table->string("sponsor")->nullable();
+            $table->string("witness")->nullable();
         });
     }
 
@@ -22,7 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('group_student', function (Blueprint $table) {
-            $table->dropColumn(['motivation']);
+            $table->dropColumn(['payment_details', 'sponsor', 'witness']);
         });
     }
 };

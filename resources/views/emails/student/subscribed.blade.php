@@ -12,6 +12,8 @@
 
     <div>Você foi inscrito(a) no curso {{ $course->name }}!</div>
     <div>Sua turma começará em {{ $group->start }}.</div>
+
+    <div>Seu contrato está em anexo.</div>
 </body>
 
 </html>

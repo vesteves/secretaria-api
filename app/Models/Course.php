@@ -30,4 +30,9 @@ class Course extends Model
     {
         return $this->belongsTo(Area::class);
     }
+
+    public function contracts()
+    {
+        return $this->hasMany(Contract::class);
+    }
 }
