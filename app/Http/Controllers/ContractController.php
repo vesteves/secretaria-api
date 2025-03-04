@@ -11,7 +11,7 @@ class ContractController extends Controller
      */
     public function index()
     {
-        return response()->json(Contract::all());
+        return response()->json(Contract::with(['student', 'group', 'course'])->get());
     }
 
     /**
